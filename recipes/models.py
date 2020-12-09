@@ -8,7 +8,7 @@ class Recipe(models.Model):
     ingredients=models.CharField(max_length=250)
     category=models.CharField(max_length=100)
     recipe_image=models.ImageField(upload_to="images")
-    created_by=models.OneToOneField(User,on_delete=models.CASCADE)
+    created_by=models.CharField(max_length=150)
 
     def __str__(self):
         return self.recipe_name
