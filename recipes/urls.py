@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from recipes.views import create_recipe,list_my_recipes,edit_recipe,view_recipe,delete_recipe,all_recipes
+from recipes.views import create_recipe,list_my_recipes,edit_recipe,view_recipe,delete_recipe,all_recipes,index,start
 
 urlpatterns = [
 
@@ -25,4 +25,7 @@ path('edit/<int:id>',edit_recipe,name="edit"),
 path('view/<int:id>',view_recipe,name="view"),
 path('delete/<int:id>',delete_recipe,name="delete"),
 path('allrecipes',all_recipes,name="allrecipes"),
+path('index',index,name="index"),
+path('start',start,name="start"),
+
 ]

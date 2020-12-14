@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from users.views import register,logIn,signOut,create_profile,home,edit_profile,view_profile
+from users.views import register,logIn,signOut,create_profile,home,edit_profile,view_profile,base
 
 urlpatterns = [
     path('register/',register,name="register"),
@@ -25,4 +25,5 @@ path('profile',create_profile,name="createprofile"),
 path('home',home,name="home"),
 path('editprofile',edit_profile,name="editprofile"),
 path('viewprofile',view_profile,name="viewprofile"),
+path('base',base,name="base"),
 ]

@@ -2,46 +2,48 @@ from django.shortcuts import render,redirect
 from users.forms import UserRegistrationForm,loginForm,ProfileCreateForm
 from django.contrib.auth import authenticate,login,logout
 from users.models import Profile
-
+from recipes.models import Recipe
+from users.models import User
 # Create your views here.
+
+def base(request):
+    return render(request,"users/base.html")
+
 def register(request):
     form=UserRegistrationForm()
     context={}
     context["form"]=form
-    if request.method=='POST':
+    if request.method=="POST":
         form=UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request,"users/home.html")
+            return render(request,"users/userhome.html")
         else:
-            context["form"]=form
             return render(request,"users/registration.html",context)
     return render(request,"users/registration.html",context)
 
 def logIn(request):
-    form=loginForm()
-    context={}
-    context["form"]=form
-    if request.method=='POST':
-        form=loginForm(request.POST)
-        if form.is_valid():
-            username=form.cleaned_data.get("username")
-            password=form.cleaned_data.get("password")
+    if request.method=="POST":
+            username=request.POST.get("username")
+            password=request.POST.get("password")
             user=authenticate(request,username=username,password=password)
             if user:
                 login(request,user)
-                return render(request,"users/home.html")
+                return render(request,"users/userhome.html")
             else:
-                context["form"]=form
-                return render(request,"users/login.html",context)
-    return render(request,"users/login.html",context)
+
+                return render(request,"users/userlogin.html")
+    return render(request,"users/userlogin.html")
 
 def signOut(request):
     logout(request)
     return redirect("login")
 
 def home(request):
-    return render(request,"users/home.html")
+    context={}
+    recipes=Recipe.objects.all()
+    context["recipes"]=recipes
+    return render(request,"users/userhome.html",context)
 
 def create_profile(request):
     form=ProfileCreateForm(initial={"user":request.user})

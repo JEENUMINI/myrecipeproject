@@ -4,6 +4,11 @@ from recipes.models import Recipe
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+def index(request):
+    return render(request,"recipes/index.html")
+
+def start(request):
+    return render(request,"recipes/start.html")
 
 def create_recipe(request):
     form=CreateRecipeForm(initial={"created_by":request.user})
@@ -48,7 +53,7 @@ def view_recipe(request,id):
 
 def delete_recipe(request,id):
     Recipe.objects.get(id=id).delete()
-    return redirect("listmyrecipes")
+    return redirect("listrecipes")
 
 @login_required
 def all_recipes(request):
