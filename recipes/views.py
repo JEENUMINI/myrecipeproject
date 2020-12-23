@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from recipes.forms import CreateRecipeForm
 from recipes.models import Recipe
 from django.contrib.auth.decorators import login_required
+from recipes.filters import RecipeFilter
 
 # Create your views here.
 def index(request):
@@ -61,5 +62,17 @@ def all_recipes(request):
     context={}
     context["recipes"]=recipes
     return render(request,"recipes/allrecipes.html",context)
+
+
+def SearchRecipes(request):
+    recipes=Recipe.objects.all()
+    myfilter=RecipeFilter(request.GET,queryset=recipes)
+    recipes=myfilter.qs
+    context={}
+    context["recipes"]=recipes
+    context["myfilter"]=myfilter
+    return render(request,"recipes/recipe_search.html",context)
+
+
 
 

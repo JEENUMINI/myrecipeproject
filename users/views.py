@@ -19,6 +19,7 @@ def register(request):
             form.save()
             return render(request,"users/userhome.html")
         else:
+            context["form"]=form
             return render(request,"users/registration.html",context)
     return render(request,"users/registration.html",context)
 
